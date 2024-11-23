@@ -7,11 +7,11 @@ export const ChangeContext = React.createContext<any>(null)
 const ChangeProvider = ({ children }: { children: React.ReactNode }) => {
 
 
-    const [boolean, setBoolean] = React.useState<boolean>(false)
+    const [storedChanges, setStoredChanges] = React.useState<{ elementsChanged: boolean, filterIsOn: "" }>({ elementsChanged: false, filterIsOn: "" })
 
     return (
         <>
-            <ChangeContext.Provider value={[boolean, setBoolean]}>
+            <ChangeContext.Provider value={[storedChanges, setStoredChanges]}>
                 {children}
             </ChangeContext.Provider>
         </>

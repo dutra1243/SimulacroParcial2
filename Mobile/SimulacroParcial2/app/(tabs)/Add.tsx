@@ -15,7 +15,7 @@ export default function Index() {
 
     const [elementToPost, setElementToPost] = useState(emptyElement)
 
-    const [boolean, setBoolean] = useContext(ChangeContext)
+    const [storedChanges, setStoredChanges] = useContext(ChangeContext)
     const [idToPost, setIdToPost] = useContext(IDContext)
 
 
@@ -43,7 +43,7 @@ export default function Index() {
                 console.log("Data received =====", data);
                 setElementToPost(data);
                 setIdToPost(idToPost + 1);
-                setBoolean(!boolean)
+                setStoredChanges({ ...storedChanges, changes: !storedChanges.changes });
                 router.back();
             })
     }

@@ -12,7 +12,7 @@ const Element = () => {
 
 
     const [elementData, setElementData] = useContext(ElementContext)
-    const [boolean, setBoolean] = useContext(ChangeContext)
+    const [storedChanges, setStoredChanges] = useContext(ChangeContext)
 
     // const [element, setElement] = React.useState<ElementDTO>({ id: 0, name: "", description: "", moons: 0, moon_names: [""], image: "" })
 
@@ -45,9 +45,9 @@ const Element = () => {
                 console.log("Data received =====", data);
                 setElementData(data);
             }).then(() => {
-                setBoolean(!boolean)
+                setStoredChanges({ ...storedChanges, changes: !storedChanges.changes })
             })
-        setBoolean(!boolean)
+        setStoredChanges({ ...storedChanges, changes: !storedChanges.changes })
         router.back();
     }
 

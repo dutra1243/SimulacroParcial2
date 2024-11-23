@@ -10,7 +10,7 @@ const ElementEdit = () => {
 
 
     const [elementData, setElementData] = useContext(ElementContext)
-    const [boolean, setBoolean] = useContext(ChangeContext)
+    const [storedChanges, setStoredChanges] = useContext(ChangeContext)
 
     const [elementToEdit, setElementToEdit] = React.useState<ElementDTO>(elementData)
 
@@ -51,7 +51,7 @@ const ElementEdit = () => {
                 console.log("Data received =====", data);
                 setElementData(data);
             }).then(() => {
-                setBoolean(!boolean)
+                setStoredChanges({ ...storedChanges, changes: !storedChanges.changes })
             })
         router.back();
 

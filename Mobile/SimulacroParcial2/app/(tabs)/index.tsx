@@ -6,6 +6,9 @@ import { router } from "expo-router";
 import { ElementContext } from "@/components/ElementProvider";
 import { ListContext } from "@/components/ListProvider";
 import { ChangeContext } from "@/components/ChangeProvider";
+import { Dropdown } from 'react-native-element-dropdown';
+import DropdownComponent from "@/components/DropDownComponent";
+
 
 export function ElementItem(props: ElementDTO) {
 
@@ -43,7 +46,7 @@ export default function Index() {
 
 
     const [elementArray, setElementArray] = useContext(ListContext)
-    const [boolean, setBoolean] = useContext(ChangeContext)
+    const [storedChanges, setStoredChanges] = useContext(ChangeContext)
 
 
     useEffect(() => {
@@ -57,7 +60,7 @@ export default function Index() {
             .then((data) => {
                 setElementArray(data);
             })
-    }, [boolean]);
+    }, [storedChanges]);
 
     return (
         <View
@@ -67,7 +70,10 @@ export default function Index() {
                 alignItems: "center",
             }}
         >
-            <FlatList data={elementArray} renderItem={({ item }) => item.id !== "" ? <ElementItem {...item} /> : <Text>Object Empty</Text>}>
+            <View style={elementStyles.DropDown}>
+                <DropdownComponent></DropdownComponent>
+            </View>
+            <FlatList data={elementArray.filter((item: ElementDTO) => storedChanges.filterIsOn === "" ? true : item.id === storedChanges.filterIsOn)} renderItem={({ item }) => item.id !== "" ? <ElementItem {...item} /> : <Text>Object Empty</Text>}>
 
             </FlatList>
         </View>
@@ -89,6 +95,10 @@ export const elementStyles = StyleSheet.create({
     },
     elementTitle: {
         fontSize: 20,
+    },
+    DropDown: {
+        minWidth: 300,
+        marginTop: 25,
     },
     image: {
         width: 200,
