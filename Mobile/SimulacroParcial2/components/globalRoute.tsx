@@ -1,1 +1,1 @@
-export const GlobalRoute = "http://192.168.56.1:8000/"
+export const GlobalRoute = "http://161.35.143.238:8000/fdutra"

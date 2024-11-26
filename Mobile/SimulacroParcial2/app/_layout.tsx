@@ -5,11 +5,14 @@ import ElementProvider from "@/components/ElementProvider";
 import ListProvider from "@/components/ListProvider";
 import ChangeProvider from "@/components/ChangeProvider";
 import IDProvider from "@/components/IDProvider";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function RootLayout() {
   return (
-    <IDProvider>
+    <GestureHandlerRootView>
+
       <ListProvider>
+        {/* <IDProvider> */}
         <ElementProvider>
           <ChangeProvider>
             <Stack>
@@ -19,7 +22,8 @@ export default function RootLayout() {
             </Stack>
           </ChangeProvider>
         </ElementProvider>
+        {/* </IDProvider> */}
       </ListProvider >
-    </IDProvider>
+    </GestureHandlerRootView>
   )
 }

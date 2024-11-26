@@ -6,7 +6,7 @@ export const ElementContext = React.createContext<any>(null)
 
 const ElementProvider = ({ children }: { children: React.ReactNode }) => {
 
-    const [elementData, setElementData] = React.useState<ElementDTO>({ id: "0", name: "", description: "", moons: 0, moon_names: [""], image: "" })
+    const [elementData, setElementData] = React.useState<ElementDTO>({ id: "0", name: "", description: "", difficulty: "", favourite: false })
 
     return (
         <>

@@ -6,6 +6,11 @@ import { ElementDTO, elementStyles } from '../../(tabs)'
 import { GlobalRoute } from '@/components/globalRoute'
 import { ChangeContext } from '@/components/ChangeProvider'
 
+import DropdownComponent from '@/components/DropDownComponent'
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Pressable } from 'react-native'
+import { globalColor } from '@/components/globalColor'
+
 const ElementEdit = () => {
 
 
@@ -14,24 +19,17 @@ const ElementEdit = () => {
 
     const [elementToEdit, setElementToEdit] = React.useState<ElementDTO>(elementData)
 
-    // const [element, setElement] = React.useState<ElementDTO>({ id: 0, name: "", description: "", moons: 0, moon_names: [""], image: "" })
+    const [difficultyValue, setDifficultyValue] = React.useState<string>(elementToEdit.difficulty)
 
-    // useEffect(() => {
-    //     fetch(GlobalRoute + `planets/${id}`, {
-    //         method: "GET",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //     })
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             setElement(data);
-    //         })
-    // }, [])
+    const handleDifficultyChange = (value: string) => {
+        setDifficultyValue(value);
+        setElementToEdit({ ...elementToEdit, difficulty: value });
+    }
 
     const handlePress = () => {
-        fetch(GlobalRoute + `planets/${elementData.id}`, {
-            method: "PUT",
+        console.log(elementToEdit);
+        fetch(GlobalRoute + `/${elementToEdit.id}`, {
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -40,9 +38,9 @@ const ElementEdit = () => {
                     id: elementData.id,
                     name: elementToEdit.name,
                     description: elementToEdit.description,
-                    moons: elementToEdit.moons,
-                    moon_names: elementToEdit.moon_names,
-                    image: elementToEdit.image,
+                    difficulty: elementToEdit.difficulty,
+                    favourite: elementToEdit.favourite,
+
                 }
             )
         })
@@ -57,15 +55,21 @@ const ElementEdit = () => {
 
     }
 
+    const handleFavourite = () => {
+        setElementToEdit({ ...elementToEdit, favourite: !elementToEdit.favourite })
+    }
+
     return (
         <View style={styles.container} >
             <View style={styles.addModal}>
-                <Text>Edit element</Text>
+                <Text style={{ fontSize: 20 }} >Edit element</Text>
                 <TextInput value={elementToEdit.name} onChangeText={(text) => setElementToEdit({ ...elementToEdit, name: text })} style={styles.TextInput} placeholder="Name" />
                 <TextInput multiline value={elementToEdit.description} onChangeText={(text) => setElementToEdit({ ...elementToEdit, description: text })} style={styles.TextInput} placeholder="Description" />
-                <TextInput value={elementToEdit.moons.toString()} onChangeText={(text) => setElementToEdit({ ...elementToEdit, moons: parseInt(text) })} style={styles.TextInput} placeholder="Moons" keyboardType="numeric" />
-                <TextInput multiline value={elementToEdit.moon_names.join(", ")} onChangeText={(text) => setElementToEdit({ ...elementToEdit, moon_names: text.split(",") })} style={styles.TextInput} placeholder="Moon names" />
-                <TextInput multiline value={elementToEdit.image} onChangeText={(text) => setElementToEdit({ ...elementToEdit, image: text })} style={styles.TextInput} placeholder="Image" />
+
+                <DropdownComponent handleChange={handleDifficultyChange} value={elementToEdit.difficulty} ></DropdownComponent>
+                <Pressable onPress={handleFavourite}>
+                    <AntDesign name={elementToEdit.favourite ? "star" : "staro"} size={45} color={elementToEdit.favourite ? globalColor : "black"} />
+                </Pressable>
                 <View style={styles.modalFooter} >
                     <Button onPress={handlePress} title="Submit" />
                 </View>
@@ -95,16 +99,19 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     addModal: {
+        borderColor: "black",
+        borderWidth: 1,
         padding: 25,
-        flex: 1,
-        margin: 25,
-        marginBottom: 5,
+        maxHeight: 400,
+        gap: 13,
         borderRadius: 10,
-        backgroundColor: "lightblue",
+        shadowColor: "black",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 10,
+        backgroundColor: "white",
         alignItems: "center",
-        maxHeight: 500,
-        maxWidth: 400,
-        gap: 20,
     },
     modalFooter: {
         flex: 1,
@@ -112,10 +119,17 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     TextInput: {
-        backgroundColor: "white",
+        backgroundColor: "whitesmoke",
         borderRadius: 10,
         padding: 10,
         minWidth: 300,
         maxWidth: 300,
+        borderColor: "black",
+        borderWidth: 1,
+    },
+    pictureButtons: {
+        marginTop: 14,
+        flexDirection: "row",
+        gap: 15,
     }
 })

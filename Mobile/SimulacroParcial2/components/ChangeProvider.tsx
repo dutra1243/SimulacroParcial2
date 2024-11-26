@@ -7,7 +7,7 @@ export const ChangeContext = React.createContext<any>(null)
 const ChangeProvider = ({ children }: { children: React.ReactNode }) => {
 
 
-    const [storedChanges, setStoredChanges] = React.useState<{ elementsChanged: boolean, filterIsOn: "" }>({ elementsChanged: false, filterIsOn: "" })
+    const [storedChanges, setStoredChanges] = React.useState<{ elementsChanged: boolean, filterIsOn: "", difficultyValue: "", difficultyLabel: "" }>({ elementsChanged: false, filterIsOn: "", difficultyValue: "", difficultyLabel: "" })
 
     return (
         <>

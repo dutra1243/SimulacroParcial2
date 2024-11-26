@@ -6,7 +6,7 @@ export const ListContext = React.createContext<any>(null)
 
 const ListProvider = ({ children }: { children: React.ReactNode }) => {
 
-    const [elementArray, setElementArray] = React.useState<ElementDTO[]>([{ id: "0", name: "", description: "", moons: 0, moon_names: [""], image: "" }])
+    const [elementArray, setElementArray] = React.useState<ElementDTO[]>([{ id: "0", name: "", description: "", difficulty: "", favourite: false }])
 
     return (
         <>
